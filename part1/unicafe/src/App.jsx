@@ -8,13 +8,30 @@ const Button = ({ onClick, text }) => {
   return <button onClick={onClick}>{text}</button>;
 };
 
-const Display = ({ text, value }) => {
+const Display = ({ text, value, extra }) => {
   return (
     <div>
       <p>
-        {text} {value}
+        {text} {value} {extra}
       </p>
     </div>
+  );
+};
+
+const Statistics = ({ good, bad, neutral }) => {
+  const all = good + bad + neutral;
+  const score = good - bad;
+  const avg = score / all;
+  const positiveScorePer = (good / all) * 100;
+  return (
+    <>
+      <Display text="good" value={good} />
+      <Display text="neutral" value={neutral} />
+      <Display text="bad" value={bad} />
+      <Display text="all" value={all} />
+      <Display text="average" value={avg} />
+      <Display text="positive" value={positiveScorePer} extra={'%'} />
+    </>
   );
 };
 
@@ -33,6 +50,13 @@ const App = () => {
     setBad(bad + 1);
   };
 
+  let statistics;
+  if (good > 0 || neutral > 0 || bad > 0) {
+    statistics = <Statistics good={good} bad={bad} neutral={neutral} />;
+  } else {
+    statistics = <p>No feedback given</p>;
+  }
+
   return (
     <div>
       <Content text="give feedback" />
@@ -40,9 +64,7 @@ const App = () => {
       <Button onClick={handleNeutral} text="neutral" />
       <Button onClick={handleBad} text="bad" />
       <Content text="statistics" />
-      <Display text="good" value={good} />
-      <Display text="neutral" value={neutral} />
-      <Display text="bad" value={bad} />
+      {statistics}
     </div>
   );
 };
