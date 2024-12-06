@@ -8,13 +8,14 @@ const Button = ({ onClick, text }) => {
   return <button onClick={onClick}>{text}</button>;
 };
 
-const Display = ({ text, value, extra }) => {
+const StatisticLine = ({ text, value, extra }) => {
   return (
-    <div>
-      <p>
-        {text} {value} {extra}
-      </p>
-    </div>
+    <tr>
+      <td>{text}</td>
+      <td>
+        {value} {extra}
+      </td>
+    </tr>
   );
 };
 
@@ -24,14 +25,16 @@ const Statistics = ({ good, bad, neutral }) => {
   const avg = score / all;
   const positiveScorePer = (good / all) * 100;
   return (
-    <>
-      <Display text="good" value={good} />
-      <Display text="neutral" value={neutral} />
-      <Display text="bad" value={bad} />
-      <Display text="all" value={all} />
-      <Display text="average" value={avg} />
-      <Display text="positive" value={positiveScorePer} extra={'%'} />
-    </>
+    <table>
+      <tbody>
+        <StatisticLine text="good" value={good} />
+        <StatisticLine text="neutral" value={neutral} />
+        <StatisticLine text="bad" value={bad} />
+        <StatisticLine text="all" value={all} />
+        <StatisticLine text="average" value={avg} />
+        <StatisticLine text="positive" value={positiveScorePer} extra={'%'} />
+      </tbody>
+    </table>
   );
 };
 
